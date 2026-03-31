@@ -433,6 +433,27 @@ Implementing these recommendations can:
 - Identified high-risk users likely to drop off
 - Enabled targeted optimization strategies
 
+- ## 🤖 AI Layer: Drop-off Prediction
+
+To make the project AI-powered, a Logistic Regression model was developed to predict user conversion probability.
+
+### Objective
+Predict whether a user is likely to complete payment or drop off.
+
+### Features Used
+- time_spent_min
+- session_count
+
+### Model Used
+- Logistic Regression (scikit-learn)
+
+### Outputs
+- conversion_probability for each user
+- risk_category (High Drop-off Risk / Medium Risk / Low Risk)
+
+### Business Value
+This AI layer helps identify high-risk users and enables targeted actions to improve conversions.
+
 ---
 
 ## 📌 Conclusion
