@@ -1,0 +1,139 @@
+# Import required libraries for machine learning
+import pandas as pd
+import numpy as np
+
+# Tools for splitting data into train and test sets
+from sklearn.model_selection import train_test_split
+
+# Logistic Regression model (simple and beginner-friendly)
+from sklearn.linear_model import LogisticRegression
+
+# Metrics to evaluate model performance
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+
+# Load the cleaned dataset
+df = pd.read_csv('../data/cleaned_data.csv')
+
+# Preview first 5 rows
+df.head()
+
+# Target variable:
+# completed_payment = 1 means user converted
+# completed_payment = 0 means user dropped off
+
+# Select input features for the model
+# These are user behavior indicators
+X = df[['time_spent_min', 'session_count']]
+
+# Target variable
+y = df['completed_payment']
+
+# Select input features for the model
+# These are user behavior indicators
+X = df[['time_spent_min', 'session_count']]
+
+# Target variable
+y = df['completed_payment']
+
+# Create the model
+model = LogisticRegression()
+
+# Train the model
+model.fit(X_train, y_train)
+
+# Predict conversion outcome on the test set
+y_pred = model.predict(X_test)
+
+# Predict probability of conversion
+y_pred_proba = model.predict_proba(X_test)[:, 1]
+
+# Accuracy of the model
+accuracy = accuracy_score(y_test, y_pred)
+print("Model Accuracy:", round(accuracy, 4))
+
+# Confusion matrix
+print("\nConfusion Matrix:")
+print(confusion_matrix(y_test, y_pred))
+
+# Classification report
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))
+
+# Accuracy of the model
+accuracy = accuracy_score(y_test, y_pred)
+print("Model Accuracy:", round(accuracy, 4))
+
+# Confusion matrix
+print("\nConfusion Matrix:")
+print(confusion_matrix(y_test, y_pred))
+
+# Classification report
+print("\nClassification Report:")
+print(classification_report(y_test, y_pred))
+
+# Users with conversion probability below 0.30 are considered high-risk
+high_risk_users = df[df['conversion_probability'] < 0.30]
+
+# Check how many high-risk users there are
+print("Number of high-risk users:", len(high_risk_users))
+
+# Preview high-risk users
+high_risk_users[['user_id', 'time_spent_min', 'session_count', 'conversion_probability']].head()
+
+# Categorize users based on predicted conversion probability
+def risk_category(prob):
+    if prob < 0.30:
+        return 'High Drop-off Risk'
+    elif prob < 0.60:
+        return 'Medium Risk'
+    else:
+        return 'Low Risk'
+
+df['risk_category'] = df['conversion_probability'].apply(risk_category)
+
+# Check distribution
+print(df['risk_category'].value_counts())
+
+# Average conversion probability by device type
+print("\nConversion Probability by Device Type:")
+print(df.groupby('device_type')['conversion_probability'].mean())
+
+# Average conversion probability by traffic source
+print("\nConversion Probability by Traffic Source:")
+print(df.groupby('traffic_source')['conversion_probability'].mean())
+
+# Average conversion probability by variant
+print("\nConversion Probability by Variant:")
+print(df.groupby('variant')['conversion_probability'].mean())
+
+# Save dataset with AI prediction columns
+df.to_csv('../data/ai_enriched_data.csv', index=False)
+
+print("AI-enriched dataset saved successfully.")
+
+# Save dataset with AI prediction columns
+df.to_csv('../data/ai_enriched_data.csv', index=False)
+
+print("AI-enriched dataset saved successfully.")
+
+## 🤖 AI Layer: Drop-off Prediction
+
+To make the project AI-powered, a Logistic Regression model was developed to predict user conversion probability.
+
+### Objective
+Predict whether a user is likely to complete payment or drop off.
+
+### Features Used
+- time_spent_min
+- session_count
+
+### Model Used
+- Logistic Regression (scikit-learn)
+
+### Outputs
+- conversion_probability for each user
+- risk_category (High Drop-off Risk / Medium Risk / Low Risk)
+
+### Business Value
+This AI layer helps identify high-risk users and enables targeted actions to improve conversions.
+
