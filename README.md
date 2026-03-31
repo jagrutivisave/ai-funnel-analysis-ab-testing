@@ -426,6 +426,15 @@ Implementing these recommendations can:
 
 ---
 
+27. AI Layer: Drop-off Prediction
+
+- Built a logistic regression model to predict user conversion probability
+- Used behavioral features like time spent and session count
+- Identified high-risk users likely to drop off
+- Enabled targeted optimization strategies
+
+---
+
 ## 📌 Conclusion
 
 This project highlights the ability to:
